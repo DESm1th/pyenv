@@ -30,7 +30,7 @@ do
     mode="path"
     shift
   fi
-  
+
   if [ "$args" = "--no-rehash" ]; then
     no_rehash=1
     shift
@@ -56,12 +56,14 @@ function main() {
     exit 1
     ;;
   "path")
-    print_path
+    # Disabled the below to allow the module file to manage paths
+    # print_path
     exit 0
     ;;
   "print")
     init_dirs
-    print_env
+    # Disabled the below to allow the module file to manage shell
+    # print_env
     print_completion
     print_shell_function
     exit 0
@@ -96,7 +98,7 @@ function help_() {
     echo '# (The below instructions are intended for common'
     echo '# shell setups. See the README for more guidance'
     echo '# if they don'\''t apply and/or don'\''t work for you.)'
-    echo 
+    echo
     case "$shell" in
     fish )
       echo "# Add pyenv executable to PATH by running"

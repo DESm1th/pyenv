@@ -123,10 +123,11 @@ if [ -n "$include_system" ] && \
 fi
 
 shopt -s dotglob nullglob
-for path in "$versions_dir"/*; do
+for path in "$versions_dir"/* "${versions_dir}/user_envs/${USER}"/*; do
   if [ -d "$path" ]; then
     if [ $(basename "$path") == "user_envs" ]; then
-      path="${path}/${USER}/"
+      # Ignore the folder that holds user-specific envs
+      continue
     fi
     if [ -n "$skip_aliases" ] && [ -L "$path" ]; then
       target="$(realpath "$path")"
@@ -135,7 +136,7 @@ for path in "$versions_dir"/*; do
     fi
     print_version "${path##*/}"
     # virtual environments created by anaconda/miniconda
-    for env_path in "${path}/envs/"*; do
+    for env_path in "${path}/envs/${USER}/"*; do
       if [ -d "${env_path}" ]; then
         print_version "${env_path#${PYENV_ROOT}/versions/}"
       fi
